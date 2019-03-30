@@ -3,11 +3,11 @@
         <div class="box">
             <h2>用户登录</h2>
             <el-form label-position="top" label-width="80px" :model="forms"  :rules="rules" ref="loginforms">
-  <el-form-item label="账号"  prop='username'>
+  <el-form-item label="账号"  prop='username' class='name'>
     <el-input v-model="forms.username"></el-input>
   </el-form-item>
-  <el-form-item label="密码"  prop='password'>
-    <el-input  v-model="forms.password"></el-input>
+  <el-form-item label="密码"  prop='password' >
+    <el-input  v-model="forms.password"  class='passinput'></el-input>
   </el-form-item>
    <el-form-item>
     <el-button type="primary" class='mybt' @click='submit("loginforms")'>登录</el-button>
@@ -63,8 +63,9 @@ methods:{
       height: 420px;
       box-sizing: border-box;
       border-radius: 15px;
-      background-color: #fff;
+      background: url('../assets/psb2.jpg') no-repeat center/cover;
       padding: 20px 20px;
+      
   }
 }
 </style>

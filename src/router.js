@@ -8,6 +8,7 @@ Vue.use(ElementUI )
 //导入组件
 import login from './components/login.vue'
 import index from './components/index.vue'
+import userlist from './components/userlist.vue'
 //路由规则
 let routes=[{
 path:'/login',
@@ -15,7 +16,11 @@ component:login
 },
 {
     path:'/',
-    component:index
+    component:index,
+    children:[{
+        path:'',
+        component:userlist
+    }]
     },]
     //实例化路由
 let router=new vueRouter({
