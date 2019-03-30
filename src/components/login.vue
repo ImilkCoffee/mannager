@@ -1,5 +1,5 @@
 <template>
-    <div>登录</div>
+    <div class='login'>登录</div>
 </template>
 
 <script>
@@ -8,6 +8,9 @@ name:'login'
 }
 </script>
 
-<style>
-
+<style lang='scss'>
+.login{
+    font-size: 50px;
+    color:red;
+}
 </style>
