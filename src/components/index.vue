@@ -16,7 +16,7 @@
       </el-header>
       <el-container class="container">
         <el-aside width="200px" class='list'>
-          <el-menu
+          <el-menu router
             default-active="2"
             class="el-menu-vertical-demo"
             @open="handleOpen"
@@ -25,11 +25,11 @@
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <span>用户中心</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="1-1">
-                  <span class="el-icon-menu"></span>选项1
+                <el-menu-item index="list">
+                  <span class="el-icon-menu"></span>用户列表
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -78,7 +78,7 @@ export default {
 }
       .main {
         height: 100%;
-        background-color: pink;
+        background-color: rgb(145, 125, 224);
         padding-top: 0px;
       }
     }
