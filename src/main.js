@@ -6,6 +6,10 @@ Vue.config.productionTip = false
 //导入路由
 import router from './router'
 import './assets/base.scss'
+import axios from 'axios'
+Vue.prototype.$axios=axios
+//设置基地址
+axios.defaults.baseURL='http://localhost:8888/api/private/v1/'
 
 new Vue({
 

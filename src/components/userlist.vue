@@ -8,18 +8,36 @@
     </el-breadcrumb>
     <el-row class="searchbox">
       <el-col :span="6">
-        <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-input placeholder="请输入内容" v-model="sendData.query" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click='search'></el-button>
         </el-input>
       </el-col>
       <el-col :span="1" >
         <el-button type="success" plain class="searchbt">成功按钮</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
+    <el-table :data="userList" border style="width: 100%">
+      <el-table-column type="index" label="#" width="50"></el-table-column>
+      <el-table-column prop="username" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+      <el-table-column prop="mobile" label="电话"></el-table-column>
+      <el-table-column prop="mg_state" label="用户状态">
+<template slot-scope="scope">
+  <el-switch
+  v-model="scope.row.mg_state"
+  active-color="#13ce66"
+  inactive-color="#ff4949">
+</el-switch>
+</template>
+
+      </el-table-column>
+      <el-table-column label="操作">
+<template slot-scope="scope">
+  <el-button type="primary" icon="el-icon-edit" plain size="mini"></el-button>
+  <el-button type="warning" icon="el-icon-delete" plain size="mini"></el-button>
+<el-button type="danger" icon="el-icon-share"plain size="mini"></el-button>
+</template>
+      </el-table-column>
     </el-table>
     <el-pagination
 
@@ -34,32 +52,32 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
-    };
-  }
+  data(){
+return {
+  sendData:{
+    query:'',
+    pagenum:1,
+    pagesize:5
+  },
+  totali:0,
+  userList:[]
+}
+  },
+  methods:{
+async search(){
+  let res= await this.$axios.get('users',{
+       headers:{
+Authorization :window.sessionStorage.getItem('token')
+       },
+       params:this.sendData
+     })
+     this.total=res.data.data.total
+     this.userList=res.data.data.users
+}
+  },
+   async  created() {
+    this.search()
+   },
 };
 </script>
 

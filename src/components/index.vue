@@ -10,7 +10,7 @@
             <h2>易购后台管理系统</h2>
           </el-col>
           <el-col :span="2" class="bt">
-            <el-button type="primary" plain>退出</el-button>
+            <el-button type="primary" plain @click='loginout'>退出</el-button>
           </el-col>
         </el-row>
       </el-header>
@@ -19,8 +19,6 @@
           <el-menu router
             default-active="2"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
           >
             <el-submenu index="1">
               <template slot="title">
@@ -45,7 +43,24 @@
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  methods:{
+   loginout(){
+     //清空本地会话
+     sessionStorage.removeItem('token')
+//编程式导航
+this.$router.push({path:'/login'})
+   }
+  },
+  beforeCreate() {
+    
+    if(window.sessionStorage.getItem('token')){
+
+    }else{
+      this.$message.error('请先买票再上船')
+      this.$router.push('/login')
+    }
+  },
 };
 </script>
 

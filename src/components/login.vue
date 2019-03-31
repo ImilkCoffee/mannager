@@ -35,9 +35,16 @@ data(){
 },
 methods:{
     submit(forms){
-        this.$refs[forms].validate((valid) => {
+        this.$refs[forms].validate(async (valid) => {
           if (valid) {
-            alert('登录成功');
+          let res= await this.$axios.post('login',this.forms)
+          if(res.data.meta.status==400){
+            this.$message.error(res.data.meta.msg);
+          }else if(res.data.meta.status==200){
+           sessionStorage.setItem('token',res.data.data.token)
+           //编程式导航
+           this.$router.push('/')
+          }
           } else {
                this.$message.error('登录格式错误');
           }
