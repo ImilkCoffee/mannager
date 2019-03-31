@@ -70,7 +70,7 @@ this.$router.push({path:'/login'})
   .myuser {
     height: 100%;
     .myheader {
-      background-color: rgb(146, 141, 141);
+      background-color: rgb(163, 161, 248);
       padding: 0px;
       margin: 0px;
       text-align: center;
@@ -89,11 +89,11 @@ this.$router.push({path:'/login'})
       height: 100%;
 .list{
     height: 100%;
-    background-color: blue;
+    background: url('../assets/u.jpg')no-repeat bottom/100%
 }
       .main {
         height: 100%;
-        background-color: rgb(145, 125, 224);
+        background-color: rgb(217, 209, 250);
         padding-top: 0px;
       }
     }
