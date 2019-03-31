@@ -33,14 +33,13 @@
       </el-table-column>
       <el-table-column label="操作">
 <template slot-scope="scope">
-  <el-button type="primary" icon="el-icon-edit" plain size="mini"></el-button>
+  <el-button type="primary" icon="el-icon-edit" plain size="mini" @click='bianji'></el-button>
   <el-button type="warning" icon="el-icon-delete" plain size="mini"></el-button>
 <el-button type="danger" icon="el-icon-share"plain size="mini"></el-button>
 </template>
       </el-table-column>
     </el-table>
     <el-pagination
-
       :page-sizes="[100, 200, 300, 400]"
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
@@ -73,6 +72,9 @@ Authorization :window.sessionStorage.getItem('token')
      })
      this.total=res.data.data.total
      this.userList=res.data.data.users
+},
+bianji(){
+  console.log(111)
 }
   },
    async  created() {
