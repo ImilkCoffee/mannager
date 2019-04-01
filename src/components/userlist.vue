@@ -1,10 +1,6 @@
 <template>
   <div class="box">
-    <el-breadcrumb separator-class="el-icon-arrow-right" class="bread">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户中心</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+  <mybread sectitle='用户中心' threetitle='用户列表'></mybread>
     <el-row class="searchbox">
       <el-col :span="6">
         <el-input placeholder="请输入内容" v-model="sendData.query" class="input-with-select" @keyup.native.enter="search">
@@ -36,11 +32,14 @@
 <template slot-scope="scope">
   <el-button type="primary" icon="el-icon-edit" plain size="mini" @click='bianji(scope.row)'></el-button>
   <el-button type="warning" icon="el-icon-delete" plain size="mini" @click='delateuser(scope.row)'></el-button>
-<el-button type="danger" icon="el-icon-share" plain size="mini"></el-button>
+<el-button type="danger" icon="el-icon-share" plain size="mini" @click='juese(scope.row)'></el-button>
 </template>
       </el-table-column>
     </el-table>
     <el-pagination
+     @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="sendData.pagenum"
       :page-sizes="[5, 10, 15, 20]"
       :page-size="sendData.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
@@ -86,6 +85,23 @@
     <el-button type="primary" @click="bianjiuser(user)">确 定</el-button>
   </div>
 </el-dialog>
+ <!-- 用户角色分配弹窗 -->
+    <el-dialog title="角色分配" :visible.sync="jueseVisible">
+  <el-form :model="user">
+    <el-form-item label="用户名" :label-width="formLabelWidth">
+      {{user.username}}
+    </el-form-item>
+    <el-form-item label="分配角色" :label-width="formLabelWidth">
+      <el-select v-model="user.role_name" placeholder="请选择活动区域">
+        <el-option v-for='item in jueselist' :label="item.roleName" :value="item.id" :key='item.id'></el-option>
+      </el-select>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="jueseVisible = false">取 消</el-button>
+    <el-button type="primary" @click="juesefenpei(user)">确 定</el-button>
+  </div>
+</el-dialog>
   </div>
   
 </template>
@@ -101,21 +117,30 @@ return {
   },
   total:0,
   userList:[],
+ 
   dialogFormVisible: false,
   bianjiVisible:false,
-        form: {
-          username: '',
-          password: '',
-          email: '',
-          mobile: '',
-        },
-        formLabelWidth: '120px',
-        rules:{
-          username:[{required: true, message: '请输入用户名称', trigger: 'blur'},{ min: 1, max: 12, message: '长度在 1 到 12个字符', trigger: 'blur'}],
-          password:[{ required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 16, message: '长度在 6 到 16个字符', trigger: 'blur' }]
-        },
-        user:{}
+  
+  // 角色分配框是否弹出
+  jueseVisible:false,
+  //角色列表
+  jueselist:[],
+  form: {
+    username: '',
+    password: '',
+    email: '',
+    mobile: '',
+  },
+  formLabelWidth: '120px',
+  rules:{
+    username:[{required: true, message: '请输入用户名称', trigger: 'blur'},{ min: 1, max: 12, message: '长度在 1 到 12个字符', trigger: 'blur'}],
+    password:[{ required: true, message: '请输入密码', trigger: 'blur' },
+      { min: 6, max: 16, message: '长度在 6 到 16个字符', trigger: 'blur' }]
+  },
+  user:{
+    username:'',
+    role_name:''
+  }
 }
   },
   methods:{
@@ -124,8 +149,30 @@ return {
 this.$axios.delete(`users/${obj.id}`)
 this.search()
   },
-   
- 
+   //角色分配
+  async juese(obj){
+this.jueseVisible=true;
+this.user.username=obj.username;
+this.user.role_name=obj.role_name;
+let res=await this.$axios.get('roles')
+this.jueselist=res.data.data
+  },
+ //角色分配修改
+async juesefenpei(obj){
+  console.log(obj)
+let res=await this.$axios.put(`users/${obj.id}/role`,{
+  rid:res.data.role_name
+})
+ },
+//页码数变化和页容量变化
+handleSizeChange(val){
+this.sendData.pagesize=val
+this.search()
+},
+handleCurrentChange(val){
+this.sendData.pagenum=val;
+this.search()
+},
     //获取用户信息
     async search(){
       let res= await this.$axios.get('users',{
@@ -173,6 +220,7 @@ this.user=res.data.data
    
    
   },
+ 
     created() {
     this.search()
    },
@@ -180,10 +228,10 @@ this.user=res.data.data
 </script>
 
 <style lang='scss'>
-.bread {
-  height: 40px;
-  line-height: 40px;
-}
+// .bread {
+//   height: 40px;
+//   line-height: 40px;
+// }
 .searchbox {
     .searchbt{
        margin-left: 10px;

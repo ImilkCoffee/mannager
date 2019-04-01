@@ -3,6 +3,9 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 
 Vue.use(ElementUI )
+//创建一个全局组件
+import mybread from './components/my-bread.vue'
+Vue.component('mybread',mybread)
 // Vue.config.productionTip = false
 //导入路由
 import router from './router'

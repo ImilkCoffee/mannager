@@ -4,10 +4,10 @@
       <el-header class="myheader">
         <el-row>
           <el-col :span="4">
-            <img src="../assets/logo.png" alt>
+            <img src="../assets/logo1.png" alt>
           </el-col>
           <el-col :span="18" class="title">
-            <h2>易购后台管理系统</h2>
+            <h2>后台管理系统</h2>
           </el-col>
           <el-col :span="2" class="bt">
             <el-button type="primary" plain @click='loginout'>退出</el-button>
@@ -20,14 +20,14 @@
             default-active="2"
             class="el-menu-vertical-demo"
           >
-            <el-submenu index="1">
+            <el-submenu v-for="item in menuslist" :index="item.id+''" router>
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>用户中心</span>
+                <span>{{item.authName}}</span>
               </template>
-              <el-menu-item-group>
-                <el-menu-item index="list">
-                  <span class="el-icon-menu"></span>用户列表
+              <el-menu-item-group v-for='it in item.children' :index="it.id+''">
+                <el-menu-item :index="it.path">
+                  <span class="el-icon-menu"></span>{{it.authName}}
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -44,12 +44,25 @@
 <script>
 export default {
   name: "index",
+  data(){
+    return{
+menuslist:[],
+    }
+     
+  },
   methods:{
    loginout(){
      //清空本地会话
      sessionStorage.removeItem('token')
 //编程式导航
 this.$router.push({path:'/login'})
+   },
+   //左侧菜单查询
+   listsearch(){
+   this.$axios.get('menus').then(res=>{
+     this.menuslist=res.data.data
+     console.log(this.menuslist)
+   })
    }
   },
   beforeCreate() {
@@ -60,6 +73,9 @@ this.$router.push({path:'/login'})
       this.$message.error('请先买票再上船')
       this.$router.push('/login')
     }
+  },
+  created() {
+    this.listsearch()
   },
 };
 </script>
@@ -95,6 +111,10 @@ this.$router.push({path:'/login'})
         height: 100%;
         background-color: rgb(217, 209, 250);
         padding-top: 0px;
+        .bread {
+  height: 40px;
+  line-height: 40px;
+}
       }
     }
   }
