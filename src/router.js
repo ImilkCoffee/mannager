@@ -17,8 +17,13 @@ import orders from "./components/orders.vue";
 import categories from "./components/categories.vue";
 import params from "./components/params.vue";
 import reports from "./components/reports.vue";
+import error from "./components/error.vue";
 //路由规则
 let routes = [
+  {
+path:'/error',
+component:error
+  },
   {
     path: "/login",
     component: login,
@@ -67,6 +72,9 @@ let router = new vueRouter({
 });
 //导航守卫,跳转时进行操作
 router.beforeEach((to, from, next) => {
+  if(to.matched.length==0){
+    next('/error')
+  }
   if(to.meta.requiresAuth==true){
     next()
   }else{
