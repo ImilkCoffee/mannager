@@ -72,6 +72,9 @@ methods:{
       border-radius: 15px;
       background: url('../assets/psb2.jpg') no-repeat center/cover;
       padding: 20px 20px;
+      h2{
+        color:rgb(82, 189, 68);
+      }
       
   }
 }
