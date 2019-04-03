@@ -61,18 +61,11 @@ this.$router.push({path:'/login'})
    listsearch(){
    this.$axios.get('menus').then(res=>{
      this.menuslist=res.data.data
-     console.log(this.menuslist)
    })
    }
   },
   beforeCreate() {
-    
-    if(window.sessionStorage.getItem('token')){
-
-    }else{
-      this.$message.error('请先买票再上船')
-      this.$router.push('/login')
-    }
+   
   },
   created() {
     this.listsearch()

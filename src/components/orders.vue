@@ -1,6 +1,6 @@
 <template>
     <div >
-       <mybread sectitle='用户中心' threetitle='用户列表'></mybread>
+       <mybread sectitle='订单管理' threetitle='订单列表'></mybread>
     <el-table  border style="width: 100%">
       <el-table-column type="index" label="#" width="50"></el-table-column>
       <el-table-column label="订单编号" width="220"></el-table-column>

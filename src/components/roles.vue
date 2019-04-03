@@ -1,6 +1,6 @@
 <template>
 <div>
-<mybread sectitle='用户中心' threetitle='用户列表'></mybread>
+<mybread sectitle='权限管理' threetitle='角色列表'></mybread>
     <el-row class="searchbox">
       <el-col :span="6">
         <el-input placeholder="请输入内容"  class="input-with-select" @keyup.native.enter="search">

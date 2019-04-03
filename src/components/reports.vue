@@ -1,6 +1,6 @@
 <template>
     <div>
-        <mybread sectitle='用户中心' threetitle='用户列表'></mybread>
+        <mybread sectitle='数据统计' threetitle='数据报表'></mybread>
     <div ref="main" style="width: 600px;height:400px;"></div>
     </div>
     
@@ -95,8 +95,14 @@ return{
 }  
 }
     },
-mounted() {
+async mounted() {
     // 使用刚指定的配置项和数据显示图表。
+    let res=await this.$axios.get('reports/type/1')
+    for (const key in res.data.data) {
+        this.option[key]=res.data.data[key]
+    }
+    this.option.xAxis[0].type='category'
+    this.option.xAxis[0].boundaryGap=false
     echarts.init(this.$refs.main).setOption(this.option); 
 },
 }

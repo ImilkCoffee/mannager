@@ -159,7 +159,6 @@ this.jueselist=res.data.data
   },
  //角色分配修改
 async juesefenpei(obj){
-  console.log(obj)
 let res=await this.$axios.put(`users/${obj.id}/role`,{
   rid:res.data.role_name
 })
@@ -183,10 +182,8 @@ this.search()
     },
     //编辑用户信息显示
    async bianji(obj){
-     console.log(obj.id)
      this.bianjiVisible=true
       let res= await this.$axios.get(`users/${obj.id}`)
-      console.log(res)
       if(res.data.meta.status==200){
 this.user=res.data.data
       }
@@ -194,7 +191,6 @@ this.user=res.data.data
     },
        //编辑用户信息提交
    async bianjiuser(obj){
-     console.log(obj)
       // let res= await this.$axios.put(`users/${obj.id}`,{email:obj.email,mobile:obj.mobile})
       let res= await this.$axios.put(`users/${obj.id}`,obj)
       if(res.data.meta.status==200){
@@ -204,7 +200,6 @@ this.user=res.data.data
     },
   //用户状态改变
    chanagestatus(obj){
-    console.log(obj.mg_state)
  this.$axios.put(`users/${obj.id}/state/${obj.mg_state}`)
    },
    //添加用户

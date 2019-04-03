@@ -21,7 +21,8 @@ import reports from "./components/reports.vue";
 let routes = [
   {
     path: "/login",
-    component: login
+    component: login,
+    meta:{requiresAuth: true}
   },
   {
     path: "/",
@@ -64,5 +65,18 @@ let routes = [
 let router = new vueRouter({
   routes
 });
+//导航守卫,跳转时进行操作
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresAuth==true){
+    next()
+  }else{
+    if(window.sessionStorage.getItem('token')){
+      next()
+    }else{
+      Vue.prototype.$message.error('请先登录')
+      next('/login')
+    }
+  }
+})
 //暴露router
 export default router;
