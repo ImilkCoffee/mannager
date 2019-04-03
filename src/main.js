@@ -36,7 +36,12 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
-
+//导入moment插件
+import moment from 'moment' 
+//设置一个全局过滤器来改变
+Vue.filter('formatTime', (value,type)=> {
+ return moment(value).format(type)
+})
 new Vue({
 
   render: h => h(App),
